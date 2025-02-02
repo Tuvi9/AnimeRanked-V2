@@ -1,32 +1,42 @@
 function Create () {
     return(
-    <div className='flex flex-col'>
-        <div>
-            <h1 className='text-2xl'>AnimeRanked</h1>
+    <div className='flex flex-col bg-black h-screen'>
+        <div className='fixed top-0 w-full'>
+            <h1 className='text-3xl bg-black text-cyan font-medium p-4'>AnimeRanked</h1>
         </div>
-        <div className='flex flex-col h-screen justify-center items-center'>
-            <div className='border rounded-2xl w-[80%]'>
-                <div>
-                    <h1 className='text-xl text-center'>Profile pic</h1>
+        <div className='flex flex-col h-full items-center justify-center'>
+            <div className='border rounded-2xl w-[80%] bg-midnight custom-shadow pt-8 pb-8'>
+                <div className='pb-4'>
+                    <h1 className='text-2xl text-center text-white font-extrabold text-stroke'>Profile picture</h1>
+                </div>
+                <div className='flex justify-center pb-4'>
+                    <button className='w-24 h-24 rounded-full bg-gray border-3 flex items-center justify-center'>
+                        <div className='text-white text-2xl font-extrabold text-stroke'>PNG</div>
+                    </button>
                 </div>
                 <form>
                     <div className='flex flex-col gap-4 items-center'>
-                        <div className=''>
+                        <div className='flex justify-center'>
                             <label htmlFor='username'></label>
-                            <input className='border rounded-2xl' type='text' id='username' placeholder='Username'></input>
+                            <input className='border-3 border-black rounded-full p-2 text-2xl font-extrabold bg-gray placeholder-white placeholder-stroke w-[70%] text-white' type='text' id='username' placeholder='Username'></input>
                             <br/>
                         </div>
-                        <div>
+                        <div className='flex justify-center'>
                             <label htmlFor='email'></label>
-                            <input className='border rounded-2xl' type='text' id='email' placeholder='Email'></input>
+                            <input className='border-3 border-black rounded-full p-2 text-2xl font-extrabold bg-gray placeholder-white placeholder-stroke w-[70%] text-white' type='text' id='email' placeholder='Email'></input>
                             <br/>
                         </div>
-                        <div>
+                        <div className='flex justify-center'>
                             <label htmlFor='password'></label>
-                            <input className='border rounded-2xl' type='text' id='password' placeholder='Password'></input>
+                            <input className='border-3 border-black rounded-full p-2 text-2xl font-extrabold bg-gray placeholder-white placeholder-stroke w-[70%] text-white' type='text' id='password' placeholder='Password'></input>
                         </div>
-                        <div>
-                            <input className='border rounded-2xl' type='submit' value='Create'></input>
+                        <div className='flex flex-row w-[70%] justify-center gap-x-4'>
+                            <div className='border-3 rounded-full p-2 bg-gray font-extrabold text-stroke text-2xl text-center w-[100px]'>
+                                <input className='text-white' type='submit' value='Create'></input>
+                            </div>
+                            <div className='flex items-center'>
+                                <button className='text-2xl text-white font-extrabold text-stroke'>Log in</button>
+                            </div>
                         </div>
                     </div>
                 </form>
