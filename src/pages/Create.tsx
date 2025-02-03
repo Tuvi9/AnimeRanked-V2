@@ -40,7 +40,7 @@ function Create () {
                                 <input className='text-white' type='submit' value='Create'></input>
                             </div>
                             <div className='flex items-center'>
-                                <Link to={`/login`}>
+                                <Link to={`/`}>
                                     <button className='text-2xl text-white font-extrabold text-stroke'>Log in</button>
                                 </Link>
                             </div>
