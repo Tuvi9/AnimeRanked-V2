@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-function Create () {
+function Login() {
     return(
     <div className='flex flex-col bg-black h-screen'>
         <div className='fixed top-0 w-full'>
@@ -22,11 +22,6 @@ function Create () {
                 <form>
                     <div className='flex flex-col gap-4 items-center'>
                         <div className='flex justify-center'>
-                            <label htmlFor='username'></label>
-                            <input className='border-3 border-black rounded-full p-2 text-2xl placeholder:font-extrabold bg-gray placeholder-white placeholder-stroke w-[70%] text-white focus:outline-none' type='text' id='username' placeholder='Username'></input>
-                            <br/>
-                        </div>
-                        <div className='flex justify-center'>
                             <label htmlFor='email'></label>
                             <input className='border-3 border-black rounded-full p-2 text-2xl placeholder:font-extrabold bg-gray placeholder-white placeholder-stroke w-[70%] text-white focus:outline-none' type='text' id='email' placeholder='Email'></input>
                             <br/>
@@ -37,11 +32,11 @@ function Create () {
                         </div>
                         <div className='flex flex-row w-[70%] justify-center gap-x-4'>
                             <div className='border-3 rounded-full p-2 bg-gray font-extrabold text-stroke text-2xl text-center w-[100px]'>
-                                <input className='text-white' type='submit' value='Create'></input>
+                                <input className='text-white' type='submit' value='Log in'></input>
                             </div>
                             <div className='flex items-center'>
-                                <Link to={`/login`}>
-                                    <button className='text-2xl text-white font-extrabold text-stroke'>Log in</button>
+                                <Link to="/create">
+                                    <button className='text-2xl text-white font-extrabold text-stroke'>Create</button>
                                 </Link>
                             </div>
                         </div>
@@ -53,4 +48,4 @@ function Create () {
     )
 }
 
-export default Create;
+export default Login

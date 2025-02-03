@@ -1,9 +1,16 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Create from './pages/Create';
+import Login from './pages/Login'
 
 function App() {
   return (
     <>
-      <Create></Create>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/create' element={<Create/>}/>
+          <Route path='/login' element={<Login/>}/>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
