@@ -1,14 +1,14 @@
-# System files
-.DS_Store
-Thumbs.db
+# Dependencies
+/node_modules
 
-# IDE
-.idea/
-.vscode/*
-!.vscode/extensions.json
+# Build
+/dist
+/dist-ssr
 
-# Logs
-*.log
+# Local env files
+.env
+.env.*
+*.local
 
 # Logs
 logs
@@ -19,12 +19,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-/Backend/node_modules
-/Frontend/node_modules
-dist
-dist-ssr
-*.local
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -34,4 +28,4 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.sw? 
