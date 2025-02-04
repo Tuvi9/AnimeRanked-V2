@@ -1,6 +1,36 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import axios from 'axios';
 
 function Create () {
+
+    interface SignUpFormState{
+        username: string;
+        email:string;
+        password: string
+    }
+
+    const[formData, setFormData] = useState<SignUpFormState> ({
+        username: '',
+        email: '',
+        password:''
+    })
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setFormData(prevData => ({...prevData, [name]: value}))
+    }
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try{
+            const response = await axios.post('http://localhost:5173/create', formData);
+            console.log(response)
+        }catch (error) {
+            console.log(error);
+        }
+    }
+
     return(
     <div className='flex flex-col bg-black h-screen'>
         <div className='fixed top-0 w-full'>
@@ -19,25 +49,54 @@ function Create () {
                         </label>
                     </div>
                 </form>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className='flex flex-col gap-4 items-center'>
                         <div className='flex justify-center'>
                             <label htmlFor='username'></label>
-                            <input className='border-3 border-black rounded-full p-2 text-2xl placeholder:font-extrabold bg-gray placeholder-white placeholder-stroke w-[70%] text-white focus:outline-none' type='text' id='username' placeholder='Username'></input>
+                            <input
+                            className='border-3 border-black rounded-full p-2 text-2xl placeholder:font-extrabold bg-gray placeholder-white placeholder-stroke w-[70%] text-white focus:outline-none' 
+                            type='text'
+                            id='username'
+                            placeholder='Username'
+                            name='username'
+                            value={formData.username}
+                            onChange={handleChange}
+                            ></input>
                             <br/>
                         </div>
                         <div className='flex justify-center'>
                             <label htmlFor='email'></label>
-                            <input className='border-3 border-black rounded-full p-2 text-2xl placeholder:font-extrabold bg-gray placeholder-white placeholder-stroke w-[70%] text-white focus:outline-none' type='text' id='email' placeholder='Email'></input>
+                            <input
+                            className='border-3 border-black rounded-full p-2 text-2xl placeholder:font-extrabold bg-gray placeholder-white placeholder-stroke w-[70%] text-white focus:outline-none' 
+                            type='text'
+                            id='email'
+                            placeholder='Email'
+                            name='email'
+                            value={formData.email}
+                            onChange={handleChange}
+                            ></input>
                             <br/>
                         </div>
                         <div className='flex justify-center'>
-                            <label htmlFor='password'></label>
-                            <input className='border-3 border-black rounded-full p-2 text-2xl placeholder:font-extrabold bg-gray placeholder-white placeholder-stroke w-[70%] text-white focus:outline-none' type='text' id='password' placeholder='Password'></input>
+                            <label htmlFor='password'
+                            ></label>
+                            <input
+                            className='border-3 border-black rounded-full p-2 text-2xl placeholder:font-extrabold bg-gray placeholder-white placeholder-stroke w-[70%] text-white focus:outline-none' 
+                            type='text'
+                            id='password'
+                            placeholder='Password'
+                            name='password'
+                            onChange={handleChange}
+                            value={formData.password}
+                            ></input>
                         </div>
                         <div className='flex flex-row w-[70%] justify-center gap-x-4'>
                             <div className='border-3 rounded-full p-2 bg-gray font-extrabold text-stroke text-2xl text-center w-[100px]'>
-                                <input className='text-white' type='submit' value='Create'></input>
+                                <button
+                                className='text-white'
+                                type='submit'
+                                value='Create'
+                                >Create</button>
                             </div>
                             <div className='flex items-center'>
                                 <Link to={`/`}>
