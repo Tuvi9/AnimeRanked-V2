@@ -5,13 +5,11 @@ import axios from 'axios';
 function Create () {
 
     interface SignUpFormState{
-        username: string;
         email:string;
-        password: string
+        password: string;
     }
 
     const[formData, setFormData] = useState<SignUpFormState> ({
-        username: '',
         email: '',
         password:''
     })
@@ -51,19 +49,6 @@ function Create () {
                 </form>
                 <form onSubmit={handleSubmit}>
                     <div className='flex flex-col gap-4 items-center'>
-                        <div className='flex justify-center'>
-                            <label htmlFor='username'></label>
-                            <input
-                            className='border-3 border-black rounded-full p-2 text-2xl placeholder:font-extrabold bg-gray placeholder-white placeholder-stroke w-[70%] text-white focus:outline-none' 
-                            type='text'
-                            id='username'
-                            placeholder='Username'
-                            name='username'
-                            value={formData.username}
-                            onChange={handleChange}
-                            ></input>
-                            <br/>
-                        </div>
                         <div className='flex justify-center'>
                             <label htmlFor='email'></label>
                             <input
