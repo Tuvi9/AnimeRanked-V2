@@ -2,8 +2,8 @@ import { Request, Response } from "express"
 import supabase from "../supabaseClient";
 
 const createUser = async (req: Request, res: Response ) => {
-    const { username, email, password } = req.body;
-    console.log({username, email, password})
+    const { email, password } = req.body;
+    console.log({ email, password})
 
     try {
         const { data, error } = await supabase.auth.signUp({

@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
+import controller from '../controllers/signUpIn';
 const router = express.Router();
-const controller = require ('../controllers/signUpIn.ts')
-const cors = require('cors')
 
-router.use(cors)
-router.post('/create', controller.createUser)
+router.post('/create', controller.createUser);
+
+export default router;
