@@ -24,8 +24,8 @@ function Create () {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try{
-            const response = await axios.post('http://localhost:5173/create', formData);
-            console.log(response)
+            const response = await axios.post('http://localhost:3000/create', formData);
+            console.log(response.data)
         }catch (error) {
             console.log(error);
         }
