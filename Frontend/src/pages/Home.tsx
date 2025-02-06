@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 function Home() {
     interface User {
         email: string;
+        username?: string;
     }
 
     const [user, setUser] = useState<User | null>(null);
@@ -19,7 +20,7 @@ function Home() {
             <h1>Welcome</h1>
             {user && (
                 <div>
-                    <p>Hello, {user.email}</p>
+                    <p>Hello, {user.username || user.email}</p>
                 </div>
             )}
         </div>

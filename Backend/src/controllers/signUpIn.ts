@@ -2,13 +2,14 @@ import { Request, Response } from "express"
 import supabase from "../supabaseClient";
 
 const createUser = async (req: Request, res: Response ) => {
-    const { email, password } = req.body;
-    console.log({ email, password})
 
     try {
         const { data, error } = await supabase.auth.signUp({
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            options: {
+                data: { display_name: req.body.username }
+            }
         })
         if (error) throw error;
         res.status(200).send(data);
@@ -19,18 +20,21 @@ const createUser = async (req: Request, res: Response ) => {
 }
 
 const loginUser = async (req: Request, res: Response ) => {
-    const { email, password } = req.body;
 
     try {
-
         const { data, error } = await supabase.auth.signInWithPassword({
             email: req.body.email,
             password: req.body.password
         })
         if (error) throw error;
+
+        const { data: userData, error: userError } = await supabase.auth.getUser();
+        if (userError) throw userError;
+
         res.status(200).json({
             success: true,
-            message: 'Login successful'
+            message: 'Login successful',
+            username: userData.user.user_metadata.display_name
         })
     } catch (error) {
         console.error(error);

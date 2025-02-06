@@ -5,14 +5,15 @@ import axios, { AxiosResponse } from 'axios';
 function Login() {
     const navigate = useNavigate();
 
-    interface LoginFormState{
-        email:string;
+    interface LoginFormState {
+        email: string;
         password: string;
     }
 
     interface LoginResponse {
         success: boolean;
         message: string;
+        username?: string;
     }
 
     const[formData, setFormData] = useState<LoginFormState> ({
@@ -33,7 +34,10 @@ function Login() {
 
             if (response.data.success) {
                 console.log(response.data.message);
-                localStorage.setItem('user', JSON.stringify({ email: formData.email }))
+                localStorage.setItem('user', JSON.stringify({
+                    email: formData.email,
+                    username: response.data.username
+                }))
                 await navigate('/home')
             } else {
                 console.log(response.data.message);
