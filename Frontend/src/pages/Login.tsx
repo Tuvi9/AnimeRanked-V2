@@ -29,12 +29,11 @@ function Login() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try{
-            const response: AxiosResponse<LoginResponse> = await axios.post('http://localhost:3000/', formData);
+            const response: AxiosResponse<LoginResponse> = await axios.post('http://localhost:3000/auth/login', formData);
             console.log(response.data);
 
             if (response.data.success) {
-                console.log(response.data.message);
-                localStorage.setItem('user', JSON.stringify({
+                sessionStorage.setItem('user', JSON.stringify({
                     email: formData.email,
                     username: response.data.username
                 }))
