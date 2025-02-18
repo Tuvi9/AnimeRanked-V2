@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import supabase from "../supabaseClient";
+import supabase from "../utils/supabaseClient";
 
 const loginUser = async (req: Request, res: Response ) => {
 

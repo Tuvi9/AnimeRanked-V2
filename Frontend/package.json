@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.12.11",
+    "@supabase/supabase-js": "^2.48.1",
     "@tailwindcss/vite": "^4.0.1",
     "@types/lodash": "^4.17.15",
     "axios": "^1.7.9",
@@ -20,6 +21,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.1.5",
+    "supabase": "^2.12.1",
     "tailwindcss": "^4.0.1"
   },
   "devDependencies": {

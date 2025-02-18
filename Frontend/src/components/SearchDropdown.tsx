@@ -1,17 +1,22 @@
 import { useState, useCallback, useEffect } from "react";
 import { useQuery, gql } from "@apollo/client";
 import debounce from 'lodash/debounce';
+import supabase from "../utils/supabaseClient";
+
 
 interface AnimeTitle {
-    romaji: string;
     english: string | null;
   }
-  
+
   interface AnimeMedia {
     id: number;
     title: AnimeTitle;
+    description: string;
+    coverImage: {
+      extraLarge: string;
+    }
   }
-  
+
   interface AnimeData {
     Page: {
       media: AnimeMedia[];
@@ -29,8 +34,11 @@ const SEARCH_ANIME = gql`
       media(search: $search) {
         id
         title {
-          romaji
           english
+        }
+        description
+        coverImage {
+          extraLarge
         }
       }
     }
@@ -40,14 +48,38 @@ const SEARCH_ANIME = gql`
 function SearchDropdown() {
     const [inputValue, SetInputValue]= useState('');
     const [searchTerm, setSearchTerm] = useState('');
-    
 
+    // Waits 300ms before making another API request
     const debouncedSetSearch= useCallback(
       debounce((value: string) => {
         setSearchTerm(value);
       }, 300) as DebouncedFunction,
       []
     );
+
+    // Inserts selected anime
+    const handleAnimeSelect = async (anime: AnimeMedia) => {
+        try {
+          const { error } = await supabase
+            .from('animes')
+            .insert({
+              anime_id: anime.id,
+              title_english: anime.title.english,
+              description: anime.description,
+              cover_image: anime.coverImage.extraLarge
+            });
+
+          if (!error) {
+            console.log('Successfully added anime:', anime.title.english);
+            SetInputValue('');
+          }
+
+          if (error) throw error;
+
+        } catch (error) {
+          console.log('Error adding anime:', error)
+        }
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
@@ -86,8 +118,12 @@ function SearchDropdown() {
             {data && (
                 <div className='flex flex-col top-full left-0 w-[200px] bg-white mt-2 rounded z-50'>
                     {data.Page.media.map((anime) => (
-                        <div key={anime.id} className='text-black p-2 cursor-pointer'>
-                            {anime.title.english || anime.title.romaji}
+                        <div
+                            key={anime.id}
+                            onClick={() => handleAnimeSelect(anime)}
+                            className='text-black p-2 cursor-pointer'
+                        >
+                            {anime.title.english}
                         </div>
                     ))}
                 </div>
