@@ -17,12 +17,14 @@ function NavBar () {
     }, [])
 
     return(
-        <div className='bg-midnight h-[80px] flex flex-row justify-between'>
-            <div className="flex items-center text-2xl text-white font-extrabold text-stroke ml-4">AnimeRanked</div>
-            <div className='flex'>
-                {user && (
-                    <Dropdown username={user.username}/>
-                )}
+        <div className='fixed top-0 left-0 right-0 z-50 px-4 pt-4'>
+            <div className='bg-midnight h-[80px] max-w-[1200px] mx-auto flex flex-row justify-between rounded-2xl px-4 gap-x-2'>
+                <div className="flex items-center text-2xl text-cyan font-extrabold text-stroke">AnimeRanked</div>
+                <div className='flex'>
+                    {user && (
+                        <Dropdown username={user.username}/>
+                    )}
+                </div>
             </div>
         </div>
     )

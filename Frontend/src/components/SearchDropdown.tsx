@@ -36,7 +36,7 @@ const SEARCH_ANIME = gql`
         title {
           english
         }
-        description
+        description(asHtml: false)
         coverImage {
           extraLarge
         }
@@ -108,7 +108,7 @@ function SearchDropdown() {
     }, [debouncedSetSearch])
 
     return (
-        <div className='relative z-50'>
+        <div className='relative z-40'>
           <div className='flex justify-center mt-8'>
             <input
             type='text'
