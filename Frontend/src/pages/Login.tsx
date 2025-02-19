@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
+import supabase from '../utils/supabaseClient';
 
 function Login() {
     const navigate = useNavigate();
@@ -14,6 +15,10 @@ function Login() {
         success: boolean;
         message: string;
         username?: string;
+        session: {
+            access_token: string;
+            refresh_token: string;
+        };
     }
 
     const[formData, setFormData] = useState<LoginFormState> ({
@@ -28,20 +33,26 @@ function Login() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        try{
+        try {
             const response: AxiosResponse<LoginResponse> = await axios.post('http://localhost:3000/auth/login', formData);
-            console.log(response.data);
-
+            
             if (response.data.success) {
+                // Store the session
+                await supabase.auth.setSession({
+                    access_token: response.data.session.access_token,
+                    refresh_token: response.data.session.refresh_token
+                });
+                
                 sessionStorage.setItem('user', JSON.stringify({
                     email: formData.email,
                     username: response.data.username
-                }))
-                await navigate('/home')
+                }));
+                
+                await navigate('/home');
             } else {
                 console.log(response.data.message);
             }
-        }catch (error) {
+        } catch (error) {
             console.log('Error during login:', error);
         }
     }

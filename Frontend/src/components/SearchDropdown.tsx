@@ -60,24 +60,32 @@ function SearchDropdown() {
     // Inserts selected anime
     const handleAnimeSelect = async (anime: AnimeMedia) => {
         try {
-          const { error } = await supabase
-            .from('animes')
-            .insert({
-              anime_id: anime.id,
-              title_english: anime.title.english,
-              description: anime.description,
-              cover_image: anime.coverImage.extraLarge
-            });
+            const { data: { user } } = await supabase.auth.getUser();
 
-          if (!error) {
-            console.log('Successfully added anime:', anime.title.english);
-            SetInputValue('');
-          }
+            if (!user) {
+                console.log('No user logged in');
+                return;
+            }
 
-          if (error) throw error;
+            const { error } = await supabase
+                .from('animes')
+                .insert({
+                    anime_id: anime.id,
+                    title_english: anime.title.english,
+                    description: anime.description,
+                    cover_image: anime.coverImage.extraLarge,
+                    user_id: user.id
+                });
+
+            if (!error) {
+                console.log('Successfully added anime:', anime.title.english);
+                SetInputValue('');
+            } else {
+                throw error;
+            }
 
         } catch (error) {
-          console.log('Error adding anime:', error)
+            console.log('Error adding anime:', error)
         }
     };
 

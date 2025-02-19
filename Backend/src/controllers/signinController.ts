@@ -16,11 +16,14 @@ const loginUser = async (req: Request, res: Response ) => {
         res.status(200).json({
             success: true,
             message: 'Login successful',
-            username: userData.user.user_metadata.display_name
+            username: userData.user.user_metadata.display_name,
+            // Supabase session for user
+            session: data.session,
+            user: data.user
         })
     } catch (error) {
         console.error(error);
-        res.status(500).send({
+        res.status(500).json({
             success: false,
             message: 'Failed to log in'
         });
