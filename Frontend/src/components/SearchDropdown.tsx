@@ -2,10 +2,11 @@ import { useState, useCallback, useEffect } from "react";
 import { useQuery, gql } from "@apollo/client";
 import debounce from 'lodash/debounce';
 import supabase from "../utils/supabaseClient";
+import animeService from "../services/animeService";
 
 
 interface AnimeTitle {
-    english: string | null;
+    english: string;
   }
 
   interface AnimeMedia {
@@ -45,7 +46,11 @@ const SEARCH_ANIME = gql`
   }
 `;
 
-function SearchDropdown() {
+interface SearchDropdownProps {
+    onAnimeAdded?: () => void;
+}
+
+function SearchDropdown({ onAnimeAdded }: SearchDropdownProps) {
     const [inputValue, SetInputValue]= useState('');
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -66,26 +71,22 @@ function SearchDropdown() {
                 console.log('No user logged in');
                 return;
             }
+            // anime data is transformed
+            await animeService.addAnime({
+                title_english: anime.title.english,
+                description: anime.description,
+                cover_image: anime.coverImage.extraLarge,
+                user_id: user.id
+            });
 
-            const { error } = await supabase
-                .from('animes')
-                .insert({
-                    anime_id: anime.id,
-                    title_english: anime.title.english,
-                    description: anime.description,
-                    cover_image: anime.coverImage.extraLarge,
-                    user_id: user.id
-                });
-
-            if (!error) {
-                console.log('Successfully added anime:', anime.title.english);
-                SetInputValue('');
-            } else {
-                throw error;
+            if (onAnimeAdded) {
+                onAnimeAdded();
             }
 
+            SetInputValue('');
         } catch (error) {
-            console.log('Error adding anime:', error)
+            console.error('Failed to add anime:', error);
+            alert('Failed to add anime. Please try again.');
         }
     };
 
@@ -128,6 +129,7 @@ function SearchDropdown() {
                     {data.Page.media.map((anime) => (
                         <div
                             key={anime.id}
+                            // returns the animes data back to handleAnimeSelect
                             onClick={() => handleAnimeSelect(anime)}
                             className='text-black p-2 cursor-pointer'
                         >

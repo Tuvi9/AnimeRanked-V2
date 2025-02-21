@@ -6,9 +6,12 @@ import SearchDropdown from '../components/SearchDropdown';
 
 interface Anime {
     id: number;
-    title_english: string;
-    description: string;
-    cover_image: string;
+    anime_id: number | null;
+    title_english: string | null;
+    description: string | null;
+    cover_image: string | null;
+    created_at: string;
+    user_id: string;
 }
 
 function Home() {
@@ -22,8 +25,7 @@ function Home() {
                 .from('animes')
                 .select('*')
                 .eq('user_id', user.id)
-                .order('id', { ascending: true })
-                .returns<Anime[]>();
+                .order('id', { ascending: true });
 
             if (error) {
                 console.error('Error fetching animes:', error);
@@ -31,24 +33,29 @@ function Home() {
             }
 
             if (data) {
-                setAnimes(data);
+                setAnimes(data as Anime[]);
             }
         }
     };
-
+    // Fetches all of the users anime
     useEffect(() => {
         fetchAnimes();
     }, []);
-    // refreshes anime list
+    
     const handleDelete = () => {
-        fetchAnimes();
+        fetchAnimes(); // Refresh the list when an anime is deleted
+    };
+
+    const handleAnimeAdded = () => {
+        fetchAnimes();  // Refresh the list when new anime is added
     };
 
     return (
         <div className='bg-black min-h-screen p-4'>
             <NavBar/>
             <div className='max-w-4xl mx-auto pt-[80px]'>
-                <SearchDropdown />
+                {/* addAnime */}
+                <SearchDropdown onAnimeAdded={handleAnimeAdded} />
                 <div className='mt-8 space-y-4'>
                     {animes.map((anime, index) => (
                         // maps over fetched animes
@@ -56,10 +63,10 @@ function Home() {
                             key={anime.id}
                             id={anime.id}
                             rank={index + 1}
-                            title={anime.title_english}
-                            description={anime.description}
-                            coverImage={anime.cover_image}
-                            // calls function after deletion
+                            title={anime.title_english || 'Untitled'}
+                            description={anime.description || 'No description available'}
+                            coverImage={anime.cover_image || ''}
+                            // deleteAnime
                             onDelete={handleDelete}
                         />
                     ))}
