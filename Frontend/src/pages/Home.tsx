@@ -10,6 +10,7 @@ interface Anime {
     title_english: string | null;
     description: string | null;
     cover_image: string | null;
+    cover_image_mobile: string;
     created_at: string;
     user_id: string;
 }
@@ -70,6 +71,7 @@ function Home() {
                             title={anime.title_english || 'Untitled'}
                             description={anime.description || 'No description available'}
                             coverImage={anime.cover_image || ''}
+                            coverImageMobile={anime.cover_image_mobile}
                             // deleteAnime
                             onDelete={handleDelete}
                             // updateDesc

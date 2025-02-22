@@ -15,6 +15,7 @@ interface AnimeTitle {
     description: string;
     coverImage: {
       extraLarge: string;
+      large: string;
     }
   }
 
@@ -40,6 +41,7 @@ const SEARCH_ANIME = gql`
         description(asHtml: false)
         coverImage {
           extraLarge
+          large
         }
       }
     }
@@ -76,6 +78,7 @@ function SearchDropdown({ onAnimeAdded }: SearchDropdownProps) {
                 title_english: anime.title.english,
                 description: anime.description,
                 cover_image: anime.coverImage.extraLarge,
+                cover_image_mobile: anime.coverImage.large,
                 user_id: user.id
             });
 

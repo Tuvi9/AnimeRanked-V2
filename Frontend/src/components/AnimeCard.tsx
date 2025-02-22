@@ -7,12 +7,13 @@ interface AnimeCardProps {
     title: string;
     description: string;
     coverImage: string;
+    coverImageMobile: string;
     onDelete?: () => void;
     onUpdate?: () => void;
 }
 
 // all of the props that are passed from Home.tsx
-function AnimeCard({ id, rank, title, description, coverImage, onDelete, onUpdate }: AnimeCardProps) {
+function AnimeCard({ id, rank, title, description, coverImage, coverImageMobile, onDelete, onUpdate }: AnimeCardProps) {
     const [isEditing, setIsEditing] = useState(false) // edit mode status
     const [newDescription, setNewDescription] = useState(description) // edited text
 
@@ -69,22 +70,27 @@ function AnimeCard({ id, rank, title, description, coverImage, onDelete, onUpdat
     };
 
     return (
-    <div className='grid grid-cols-[auto_1fr] border bg-midnight p-4 mb-[50px] rounded-2xl shadow-[5px_4px_4px_0px_rgba(0,229,255,0.25)]'>
-            <div className={`flex items-center text-[80px] font-bold mr-8 ${getRankColor(rank)}`}>
+    <div className='grid grid-cols-[auto_1fr] gap-x-20 border bg-midnight p-4 mb-[50px] rounded-2xl shadow-[5px_4px_4px_0px_rgba(0,229,255,0.25)]'>
+            <div className={`flex items-center text-[80px] font-bold ml-8 ${getRankColor(rank)}`}>
                 {rank}#
             </div>
-            <div className='w-[200px] h-[200px]'>
+            <div className='w-[150px] h-[200px] md:w-[400px] md:h-[400px]'>
                 <img
                     src={coverImage}
                     alt={title}
-                    className='w-full h-full object-fit rounded-2xl'
+                    className='hidden md:block w-full h-full object-fit rounded-2xl'
+                />
+                <img
+                    src={coverImageMobile}
+                    alt={title}
+                    className='md:hidden w-full h-full rounded-2xl'
                 />
             </div>
             <br/>
             <div className='col-start-1 col-end-3 line-clamp-4'>
                 <div className="flex justify-between items-center mb-2">
                     <h2 className='text-2xl font-bold text-white'>{title}</h2>
-                    <div className='flex py-4 flex-col'>
+                    <div className='flex py-4 flex-row'>
                         <button 
                             // button for deleting anime
                             onClick={handleDelete}
@@ -95,7 +101,7 @@ function AnimeCard({ id, rank, title, description, coverImage, onDelete, onUpdat
                         <button 
                             // First click turns it true second click false
                             onClick={() => setIsEditing(!isEditing)}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-2 rounded w-[100px]"
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-[100px]"
                         >
                             {isEditing ? 'Cancel' : 'Edit'}
                         </button>

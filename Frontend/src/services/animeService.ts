@@ -22,6 +22,7 @@ const animeService = {
         title_english: string,
         description: string,
         cover_image: string,
+        cover_image_mobile: string,
         user_id: string
     }) {
         try {
