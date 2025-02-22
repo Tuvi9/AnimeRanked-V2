@@ -26,7 +26,7 @@ function Home() {
                 .from('animes')
                 .select('*')
                 .eq('user_id', user.id)
-                .order('id', { ascending: true });
+                .order('rank', { ascending: true });
 
             if (error) {
                 console.error('Error fetching animes:', error);

@@ -17,6 +17,9 @@ function AnimeCard({ id, rank, title, description, coverImage, coverImageMobile,
     const [isEditing, setIsEditing] = useState(false) // edit mode status
     const [newDescription, setNewDescription] = useState(description) // edited text
 
+    const [isEditingRank, setIsEditingRank] = useState(false); // edit mode for rank
+    const [newRank, setNewRank] = useState(rank); // updated rank
+
 
     const getRankColor = (rank: number) => {
         switch(rank) {
@@ -46,7 +49,7 @@ function AnimeCard({ id, rank, title, description, coverImage, coverImageMobile,
                 alert('Failed to delete anime. Please try again.');
             }
         }
-    }
+    };
 
     const handleUpdateDescription = async () => {
         try {
@@ -69,10 +72,61 @@ function AnimeCard({ id, rank, title, description, coverImage, coverImageMobile,
         }
     };
 
+    const handleUpdateRank = async () => {
+        try {
+            // calls function to update rank
+            await animeService.updateRank(id, newRank);
+            setIsEditingRank(false);
+            if (onUpdate) {
+                onUpdate();
+            }
+        } catch (error) {
+            console.error('Failed to update rank:', error);
+            alert('Failed to update rank. Please try again.');
+        }
+    };
+
     return (
     <div className='grid grid-cols-[auto_1fr] gap-x-20 border bg-midnight p-4 mb-[50px] rounded-2xl shadow-[5px_4px_4px_0px_rgba(0,229,255,0.25)]'>
             <div className={`flex items-center text-[80px] font-bold ml-8 ${getRankColor(rank)}`}>
-                {rank}#
+                {/* Rank editing mode */}
+                {isEditingRank ? (
+                    <div className="flex items-center gap-2 flex-col">
+                        <input
+                            type="number"
+                            value={newRank}
+                            onChange={(e) => setNewRank(Number(e.target.value))}
+                            className="w-20 h-12 text-3xl text-white rounded px-2"
+                            min="1"
+                        />
+
+                        <button
+                            // button for updating rank
+                            onClick={handleUpdateRank}
+                            className="w-[100px] bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded"
+                        >
+                            Save
+                        </button>
+                        <button
+                            onClick={() => {
+                                setIsEditingRank(false);
+                                setNewRank(rank);
+                            }}
+                            className="w-[100px] bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                ) : (
+                    // Press to edit rank
+                    <div 
+                        onClick={() => setIsEditingRank(true)}
+                        className="cursor-pointer hover:opacity-80"
+                        title="Click to edit rank"
+                    >
+                        {rank}#
+                    </div>
+                )}
             </div>
             <div className='w-[150px] h-[200px] md:w-[400px] md:h-[400px]'>
                 <img

@@ -26,10 +26,24 @@ const animeService = {
         user_id: string
     }) {
         try {
+
+            const { data: maxRankResult } = await supabase
+                .from('animes')
+                .select('rank')
+                .eq('user_id', animeData.user_id)
+                .order('rank', {ascending: false}) // Sort highest to lowest
+                .limit(1);
+
+            // add +1 to new anime from previous lowest
+            const newRank = (maxRankResult?.[0]?.rank || 0) +1;
+
             // Insert data into supabase
             const { data, error } = await supabase
                 .from('animes')
-                .insert(animeData)
+                .insert({
+                    ...animeData,
+                    rank: newRank
+                })
                 .select()
                 .single();
 
@@ -46,7 +60,6 @@ const animeService = {
         description: string
     }) {
         try {
-
             const { error } = await supabase
                 .from('animes')
                 .update({description: descData.description})
@@ -57,6 +70,21 @@ const animeService = {
             return { success: true }
         } catch (error) {
             console.error('Error updating description', error);
+            throw error;
+        }
+    },
+    // updates animes rank
+    async updateRank(id: number, newRank:number) {
+        try {
+            const { error } = await supabase
+                .from('animes')
+                .update({ rank: newRank})
+                .eq('id', id)
+
+            if (error) throw error;
+            return { success: true };
+        } catch (error) {
+            console.error('Error updating rank:', error);
             throw error;
         }
     }

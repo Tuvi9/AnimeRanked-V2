@@ -13,26 +13,35 @@ export type Database = {
         Row: {
           anime_id: number | null
           cover_image: string | null
+          cover_image_mobile: string | null
           created_at: string
           description: string | null
           id: number
+          rank: number | null
           title_english: string | null
+          user_id: string | null
         }
         Insert: {
           anime_id?: number | null
           cover_image?: string | null
+          cover_image_mobile?: string | null
           created_at?: string
           description?: string | null
           id?: number
+          rank?: number | null
           title_english?: string | null
+          user_id?: string | null
         }
         Update: {
           anime_id?: number | null
           cover_image?: string | null
+          cover_image_mobile?: string | null
           created_at?: string
           description?: string | null
           id?: number
+          rank?: number | null
           title_english?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
