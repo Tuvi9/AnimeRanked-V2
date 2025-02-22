@@ -38,6 +38,26 @@ const animeService = {
             console.error('Error adding anime:', error);
             throw error;
         }
+    },
+    // updating Description
+    async updateDesc(descData:{
+        id: number,
+        description: string
+    }) {
+        try {
+
+            const { error } = await supabase
+                .from('animes')
+                .update({description: descData.description})
+                .eq('id', descData.id)
+                .select();
+
+            if (error) throw error;
+            return { success: true }
+        } catch (error) {
+            console.error('Error updating description', error);
+            throw error;
+        }
     }
 };
 

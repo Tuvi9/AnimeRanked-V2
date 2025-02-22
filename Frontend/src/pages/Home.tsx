@@ -50,6 +50,10 @@ function Home() {
         fetchAnimes();  // Refresh the list when new anime is added
     };
 
+    const handleUpdate = () => {
+        fetchAnimes();  // Refresh the list when description is updated
+    };
+
     return (
         <div className='bg-black min-h-screen p-4'>
             <NavBar/>
@@ -58,7 +62,7 @@ function Home() {
                 <SearchDropdown onAnimeAdded={handleAnimeAdded} />
                 <div className='mt-8 space-y-4'>
                     {animes.map((anime, index) => (
-                        // maps over fetched animes
+                        // maps fetched animes
                         <AnimeCard
                             key={anime.id}
                             id={anime.id}
@@ -68,6 +72,8 @@ function Home() {
                             coverImage={anime.cover_image || ''}
                             // deleteAnime
                             onDelete={handleDelete}
+                            // updateDesc
+                            onUpdate={handleUpdate}
                         />
                     ))}
                 </div>
