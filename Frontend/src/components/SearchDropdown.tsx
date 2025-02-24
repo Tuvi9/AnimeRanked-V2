@@ -119,22 +119,22 @@ function SearchDropdown({ onAnimeAdded }: SearchDropdownProps) {
             value={inputValue}
             onChange={handleInputChange}
             placeholder='Search anime...'
-            className='w-[200px] p-2 rounded bg-white text-black focus:outline-none'
+            className='w-[200px] md:w-[300px] h-[50px] text-xl md:text-2xl p-2 rounded-xl bg-midnight text-cyan font-bold placeholder-cyan focus:outline-none'
             />
           </div>
 
           {inputValue.length >= 2 && (
-            <div className='flex justify-center'>
-            {loading && <div className="top-full left-0 w-[200px] bg-white mt-1 rounded p-2 text-black">Loading...</div>}
-            {error && <div className="top-full left-0 w-[200px] bg-white mt-1 rounded p-2 text-black">Error: {error.message}</div>}
+            <div className='flex justify-center rounded-2xl'>
+            {loading && <div className="top-full left-0 w-[200px] md:w-[300px] text-xl bg-midnight mt-1 rounded-2xl p-2 text-cyan font-bold">Loading...</div>}
+            {error && <div className="top-full left-0 w-[200px] md:w-[300px] text-xl bg-midnight mt-1 rounded-2xl p-2 text-cyan font-bold">Error: {error.message}</div>}
             {data && (
-                <div className='flex flex-col top-full left-0 w-[200px] bg-white mt-2 rounded z-50'>
+                <div className='flex flex-col top-full left-0 w-[200px] md:w-[300px] text-xl bg-midnight mt-2 rounded-2xl z-50 bg-midnight'>
                     {data.Page.media.map((anime) => (
                         <div
                             key={anime.id}
                             // returns the animes data back to handleAnimeSelect
                             onClick={() => handleAnimeSelect(anime)}
-                            className='text-black p-2 cursor-pointer'
+                            className='bg-midnight text-cyan p-2 cursor-pointer font-bold rounded-2xl'
                         >
                             {anime.title.english}
                         </div>

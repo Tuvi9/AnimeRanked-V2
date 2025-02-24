@@ -87,7 +87,7 @@ function AnimeCard({ id, rank, title, description, coverImage, coverImageMobile,
     };
 
     return (
-    <div className='grid grid-cols-[auto_1fr] gap-x-20 border bg-midnight p-4 mb-[50px] rounded-2xl shadow-[5px_4px_4px_0px_rgba(0,229,255,0.25)]'>
+    <div className='grid grid-cols-[auto_1fr] md:grid-cols-[auto_auto_auto] gap-x-20 border bg-midnight p-4 mb-[50px] rounded-2xl shadow-[5px_4px_4px_0px_rgba(0,229,255,0.25)]'>
             <div className={`flex items-center text-[80px] font-bold ml-8 ${getRankColor(rank)}`}>
                 {/* Rank editing mode */}
                 {isEditingRank ? (
@@ -128,7 +128,7 @@ function AnimeCard({ id, rank, title, description, coverImage, coverImageMobile,
                     </div>
                 )}
             </div>
-            <div className='w-[150px] h-[200px] md:w-[400px] md:h-[400px]'>
+            <div className='w-[150px] h-[200px] md:w-[300px] md:h-[400px] md:order-last'>
                 <img
                     src={coverImage}
                     alt={title}
@@ -140,10 +140,9 @@ function AnimeCard({ id, rank, title, description, coverImage, coverImageMobile,
                     className='md:hidden w-full h-full rounded-2xl'
                 />
             </div>
-            <br/>
-            <div className='col-start-1 col-end-3 line-clamp-4'>
-                <div className="flex justify-between items-center mb-2">
-                    <h2 className='text-2xl font-bold text-white'>{title}</h2>
+            <div className='col-span-2 md:col-span-1 line-clamp-4 md:place-content-center'>
+                <div className="flex md:grid justify-between items-center mb-2">
+                    <h2 className='text-2xl text-stroke font-extrabold text-white md:mb-[50px] md:text-5xl'>{title}</h2>
                     <div className='flex py-4 flex-row'>
                         <button 
                             // button for deleting anime
@@ -167,7 +166,7 @@ function AnimeCard({ id, rank, title, description, coverImage, coverImageMobile,
                         <textarea
                             value={newDescription}
                             onChange={(e) => setNewDescription(e.target.value)}
-                            className='w-full p-2 text-white rounded'
+                            className='w-full p-2 text-white rounded md:text-xl md:font-bold'
                             rows={4}
                         />
                         <button
@@ -178,7 +177,7 @@ function AnimeCard({ id, rank, title, description, coverImage, coverImageMobile,
                         </button>
                     </div>
                 ) : (
-                    <p className='text-gray-300'>{description}</p>
+                    <p className='text-gray-300 md:text-xl md:font-bold'>{description}</p>
                 )}
             </div>
     </div>
