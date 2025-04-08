@@ -77,9 +77,8 @@ function AnimeCard({ id, rank, title, description, coverImage, coverImageMobile,
             // calls function to update rank
             await animeService.updateRank(id, newRank);
             setIsEditingRank(false);
-            if (onUpdate) {
-                onUpdate();
-            }
+            // Reload page
+            window.location.reload();
         } catch (error) {
             console.error('Failed to update rank:', error);
             alert('Failed to update rank. Please try again.');

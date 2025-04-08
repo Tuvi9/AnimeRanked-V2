@@ -76,10 +76,39 @@ const animeService = {
     // updates animes rank
     async updateRank(id: number, newRank:number) {
         try {
+            // Get the current anime's old rank
+            const { data: currentAnime } = await supabase
+                .from('animes')
+                .select('rank')
+                .eq('id', id)
+                .single();
+
+            if (!currentAnime) throw new Error('Anime not found');
+
+            const oldRank = currentAnime.rank;
+
+            // Find the anime that currently has the new rank
+            const { data: animeWithNewRank } = await supabase
+                .from('animes')
+                .select('id')
+                .eq('rank', newRank)
+                .single();
+
+            // If there's an anime with the new rank, update its rank to the old rank
+            if (animeWithNewRank) {
+                const { error: swapError } = await supabase
+                    .from('animes')
+                    .update({ rank: oldRank })
+                    .eq('id', animeWithNewRank.id);
+
+                if (swapError) throw swapError;
+            }
+
+            // Update the current anime's rank
             const { error } = await supabase
                 .from('animes')
-                .update({ rank: newRank})
-                .eq('id', id)
+                .update({ rank: newRank })
+                .eq('id', id);
 
             if (error) throw error;
             return { success: true };
